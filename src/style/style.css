@@ -3,6 +3,26 @@
   min-height: 300px;
 }
 
-.board_selected {
+.board_selected, .board {
   min-height: 250px;
+}
+
+.title {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.login {
+  width: 90px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.login__img {
+  display: block;
+}
+
+.login > span {
+  display: block;
 }

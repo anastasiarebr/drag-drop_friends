@@ -1,21 +1,24 @@
 <template>
   <div id="app">
     <b-container>
-      <div id="vk_api_transport"></div>
       <b-row >
         <b-button
         class="mx-auto mt-5"
         variant="primary"
         @click="loadData()"
-        >Log In
-        <img src="./assets/vk.svg" alt="vk">
+        >
+        <div class="login">
+        <img class="login__img" src="./assets/vk.svg" alt="vk">
+        
+        <span>Log In</span>
+        </div>
         </b-button>
       </b-row>
 
       <b-row>
         <b-col>
           <div class="column border border-secondary p-1">
-            <h2 class="mx-auto">Friend List</h2>
+            <h2 class="title">Friend List</h2>
             <div
               class="board pb-5"
               @drop="onDrop($event, 1)"
@@ -23,7 +26,6 @@
               @dragover.prevent
               >
               <div
-                v-if="people.length != 0"
                 v-for="person in getList(1)"
                 :id='person.id'
                 class="d-flex align-items-center border border-secondary p-2 m-1"
@@ -39,7 +41,7 @@
         </b-col>
         <b-col>
           <div class="column border border-secondary p-1">
-            <h2 class="mx-auto">Selected List</h2>
+            <h2 class="title">Selected List</h2>
             <div
               class="board_selected pb-5"
               @drop="onDrop($event, 2)"
@@ -47,7 +49,6 @@
               @dragover.prevent
               >
               <div
-                v-if="people.length != 0"
                 v-for="person in getList(2)"
                 :id='person.id'
                 class="d-flex align-items-center border border-secondary p-2 m-1"
@@ -86,13 +87,12 @@ export default {
   },
   created() {
     const href = window.location.href
-    console.log(href);
 
     if (href.includes('access_token')) {
       let arr = href.split('=');
       let token = arr[1].split('&')[0];
 
-      fetch(`https://api.vk.com/method/friends.search?count=60&fields=photo_100&access_token=${token}&v=5.81`)
+      fetch(`https://api.vk.com/method/friends.search?count=100&fields=photo_100&access_token=${token}&v=5.81`)
       .then((response) => {
         return response.json();
       })
@@ -111,16 +111,8 @@ export default {
 
     },
   methods: {
-    authInfo(response) {
-    if (response.session) {
-      alert('user: '+response.session.mid);
-    } else {
-      alert('not auth');
-    }
-    },
-    async loadData() {
-
-      document.location = "https://oauth.vk.com/authorize?client_id=8136932&display=page&scope=friends&redirect_uri=http://localhost:8080&response_type=token&v=5.52"
+    loadData() {
+      document.location = "https://oauth.vk.com/authorize?client_id=8137313&display=page&scope=friends&redirect_uri=http://localhost:8080&response_type=token&v=5.52"
     },
     getList(list) {
       return this.people.filter((item) => item.list === list)
@@ -142,18 +134,6 @@ export default {
     submit() {
       console.log(this.people.filter((item) => item.list == 2))
     },
-
-
-
-
-
-    // https://api.vk.com/method/friends.search?count=60&fields=photo_100&access_token=015ce117240c9be18b900042e1b09f346901f6a12550d1296a676237e3f0c67d2255561bf9edbac3140c4&v=5.81
-
-    // 015ce117240c9be18b900042e1b09f346901f6a12550d1296a676237e3f0c67d2255561bf9edbac3140c4
-
-    // https://oauth.vk.com/authorize?client_id=8136932&display=page&scope=friends&response_type=token&v=5.52
-
-    // https://oauth.vk.com/blank.html#access_token=015ce117240c9be18b900042e1b09f346901f6a12550d1296a676237e3f0c67d2255561bf9edbac3140c4&expires_in=86400&user_id=29823534
   }
 }
 </script>
