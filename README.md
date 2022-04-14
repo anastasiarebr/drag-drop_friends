@@ -1,4 +1,4 @@
-# test-wgg
+# Drag&Drop Friends
 
 ## Project setup
 ```
