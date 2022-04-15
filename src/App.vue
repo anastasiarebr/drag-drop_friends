@@ -81,7 +81,6 @@ export default {
   name: 'App',
   data() {
     return {
-      draggable: true,
       people: [],
     }
   },
@@ -122,17 +121,15 @@ export default {
       e.dataTransfer.dropEffect = 'move';
       e.dataTransfer.effectAllowed = 'move';
       e.dataTransfer.setData('card_id', target.id);
-      setTimeout(() => {
-        target.style.display = 'none'
-      }, 0);
     },
     onDrop(e, list) {
       const card_id = e.dataTransfer.getData('card_id');
       const item = this.people.find((item) => item.id == card_id);
-      item.list = list
+      item.list = list;
+      let card = document.getElementById(card_id);
     },
     submit() {
-      console.log(this.people.filter((item) => item.list == 2))
+      console.log(this.getList(2));
     },
   }
 }
